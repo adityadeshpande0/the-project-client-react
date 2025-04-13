@@ -8,7 +8,10 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 interface TextInputFieldProps {
     label: string;
+    margin?: 'none' | 'dense' | 'normal';
     value: string;
+    size?: 'small' | 'medium';
+    variant?: 'outlined' | 'filled' | 'standard';
     onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
     placeholder?: string;
     type?: string;
@@ -50,6 +53,9 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
     showTogglePassword = false,
     sx,
     autoComplete,
+    variant = 'outlined',
+    size = 'medium',
+    margin = 'normal',
 }) => {
     const [showPassword, setShowPassword] = React.useState(false);
 
@@ -80,6 +86,7 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
     return (
         <TextField
             label={label}
+            margin={margin}
             value={value}
             onChange={onChange}
             placeholder={placeholder}
@@ -92,7 +99,8 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
             rows={rows}
             maxRows={maxRows}
             required={required}
-            variant="outlined"
+            variant={variant}
+            size={size}
             InputProps={{ ...InputProps, ...adornments }}
             InputLabelProps={InputLabelProps}
             sx={sx}
