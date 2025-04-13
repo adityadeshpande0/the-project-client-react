@@ -1,4 +1,3 @@
-
 import Login from "./screens/authentication/Login";
 
 function App() {

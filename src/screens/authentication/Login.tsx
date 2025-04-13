@@ -32,8 +32,8 @@ const Login: React.FC = () => {
           onChange={(e) => setPassword(e.target.value)}
           margin="normal"
           size="small"
-          type="password" // auto-triggers eye icon
-          showTogglePassword={true} // show eye icon
+          type="password"
+          showTogglePassword={true}
         />
         <Button type="submit" variant="contained" fullWidth onClick={handleLogin}>
           Login
