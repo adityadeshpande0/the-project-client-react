@@ -1,16 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import TextInputField from "../../components/text-input-fields/TextInputField";
-import { Paper, Stack, Button } from "@mui/material";
+import { Paper, Stack, Button, Typography } from "@mui/material";
+import { useFormValidation } from "../../hooks/useFormValidation";
 
 const Login: React.FC = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleLogin = (event: React.FormEvent) => {
-    event.preventDefault();
-    console.log("Login submitted", { email, password });
-    // Add actual login logic here
-  };
+  const formik = useFormValidation("login", (values) => {
+    console.log("Form submitted with values:", values);
+  });
 
   return (
     <Paper
@@ -20,22 +16,38 @@ const Login: React.FC = () => {
       <Stack spacing={2}>
         <TextInputField
           label="Email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          margin="normal"
-          size="small"
           type="email"
+          size="small"
+          margin="normal"
+          {...formik.getFieldProps("email")}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          helperText={
+            formik.touched.email && typeof formik.errors.email === "string"
+              ? formik.errors.email
+              : undefined
+          }
         />
+
         <TextInputField
           label="Password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          margin="normal"
-          size="small"
           type="password"
+          size="small"
+          margin="normal"
           showTogglePassword={true}
+          {...formik.getFieldProps("password")}
+          error={formik.touched.password && Boolean(formik.errors.password)}
+          helperText={
+            formik.touched.password ? formik.errors.password : undefined
+          }
         />
-        <Button type="submit" variant="contained" fullWidth onClick={handleLogin}>
+
+        <Button
+          type="submit"
+          variant="contained"
+          fullWidth
+          onClick={() => formik.handleSubmit}
+          disabled={!formik.isValid || !formik.dirty}
+        >
           Login
         </Button>
       </Stack>

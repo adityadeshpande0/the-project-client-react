@@ -8,6 +8,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
 interface TextInputFieldProps {
     label: string;
+    name?: string;
     margin?: 'none' | 'dense' | 'normal';
     value: string;
     size?: 'small' | 'medium';
@@ -35,6 +36,7 @@ interface TextInputFieldProps {
 const TextInputField: React.FC<TextInputFieldProps> = ({
     label,
     value,
+    name,
     onChange,
     placeholder = '',
     type = 'text',
@@ -88,6 +90,7 @@ const TextInputField: React.FC<TextInputFieldProps> = ({
             label={label}
             margin={margin}
             value={value}
+            name={name}
             onChange={onChange}
             placeholder={placeholder}
             type={getType()}
