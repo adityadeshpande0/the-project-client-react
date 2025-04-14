@@ -1,64 +1,76 @@
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
+import { useState, useCallback } from "react";
 
-type FormType = 'login' | 'register';
-
-type FormValuesMap = {
-  login: {
-    email: string;
-    password: string;
-  };
-  register: {
-    name: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-  };
+type ValidationRule = {
+  required?: boolean;
+  pattern?: RegExp;
+  minLength?: number;
+  maxLength?: number;
+  custom?: (value: string) => string | null;
 };
 
-const formConfigs = {
-  login: {
-    initialValues: {
-      email: '',
-      password: '',
-    },
-    validationSchema: Yup.object({
-      email: Yup.string().email('Invalid email').required('Required'),
-      password: Yup.string().min(6, 'Min 6 characters').required('Required'),
-    }),
-  },
-  register: {
-    initialValues: {
-      name: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-    },
-    validationSchema: Yup.object({
-      name: Yup.string().required('Required'),
-      email: Yup.string().email('Invalid email').required('Required'),
-      password: Yup.string().min(6, 'Min 6 characters').required('Required'),
-      confirmPassword: Yup.string()
-        .oneOf([Yup.ref('password')], 'Passwords must match')
-        .required('Required'),
-    }),
-  },
-} as const;
+type ValidationSchema<T> = {
+  [K in keyof T]: ValidationRule;
+};
 
-export function useFormValidation<T extends FormType>(
-  formType: T,
-  onSubmit: (values: FormValuesMap[T]) => void
+type Errors<T> = {
+  [K in keyof T]?: string;
+};
+
+export function useFormValidation<T>(
+  initialValues: T,
+  validationSchema: ValidationSchema<T>
 ) {
-  const { initialValues, validationSchema } = formConfigs[formType] as {
-    initialValues: FormValuesMap[T];
-    validationSchema: Yup.ObjectSchema<any>;
+  const [values, setValues] = useState<T>(initialValues);
+  const [errors, setErrors] = useState<Errors<T>>({});
+
+  const validateField = useCallback(
+    (name: keyof T, value: string) => {
+      const rules = validationSchema[name];
+      let error = "";
+
+      if (rules.required && !value.trim()) {
+        error = "This field is required.";
+      } else if (rules.minLength && value.length < rules.minLength) {
+        error = `Minimum length is ${rules.minLength}.`;
+      } else if (rules.maxLength && value.length > rules.maxLength) {
+        error = `Maximum length is ${rules.maxLength}.`;
+      } else if (rules.pattern && !rules.pattern.test(value)) {
+        error = "Invalid format.";
+      } else if (rules.custom) {
+        const customError = rules.custom(value);
+        if (customError) error = customError;
+      }
+
+      setErrors((prev) => ({ ...prev, [name]: error }));
+      return error === "";
+    },
+    [validationSchema]
+  );
+
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const { name, value } = e.target;
+      setValues((prev) => ({ ...prev, [name]: value }));
+      validateField(name as keyof T, value);
+    },
+    [validateField]
+  );
+
+  const validateForm = useCallback(() => {
+    let isValid = true;
+    (Object.keys(validationSchema) as (keyof T)[]).forEach((field) => {
+      const valid = validateField(field, values[field] as unknown as string);
+      if (!valid) isValid = false;
+    });
+    return isValid;
+  }, [values, validateField, validationSchema]);
+
+  return {
+    values,
+    errors,
+    handleChange,
+    validateForm,
+    setValues,
+    setErrors,
   };
-
-  const formik = useFormik<FormValuesMap[T]>({
-    initialValues,
-    validationSchema,
-    onSubmit,
-  });
-
-  return formik;
 }

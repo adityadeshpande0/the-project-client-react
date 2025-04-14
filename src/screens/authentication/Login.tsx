@@ -1,57 +1,74 @@
 import React from "react";
 import TextInputField from "../../components/text-input-fields/TextInputField";
-import { Paper, Stack, Button, Typography } from "@mui/material";
+import { Button } from "@mui/material";
 import { useFormValidation } from "../../hooks/useFormValidation";
 
+type FormFields = {
+  email: string;
+  password: string;
+};
+
+const validationRules = {
+  email: {
+    required: true,
+    pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+  },
+  password: {
+    required: true,
+    minLength: 8,
+  },
+};
+
 const Login: React.FC = () => {
-  const formik = useFormValidation("login", (values) => {
-    console.log("Form submitted with values:", values);
-  });
+  const { values, errors, handleChange, validateForm } =
+    useFormValidation<FormFields>(
+      {
+        email: "",
+        password: "",
+      },
+      validationRules
+    );
+
+  const handleSubmit = () => {
+    if (validateForm()) {
+      console.log("Login successful:", values);
+      // Call your login API here
+    } else {
+      console.log("Validation errors:", errors);
+    }
+  };
 
   return (
-    <Paper
-      elevation={3}
-      sx={{ padding: 5, maxWidth: 600, margin: "auto", marginTop: 5 }}
-    >
-      <Stack spacing={2}>
-        <TextInputField
-          label="Email"
-          type="email"
-          size="small"
-          margin="normal"
-          {...formik.getFieldProps("email")}
-          error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={
-            formik.touched.email && typeof formik.errors.email === "string"
-              ? formik.errors.email
-              : undefined
-          }
-        />
-
-        <TextInputField
-          label="Password"
-          type="password"
-          size="small"
-          margin="normal"
-          showTogglePassword={true}
-          {...formik.getFieldProps("password")}
-          error={formik.touched.password && Boolean(formik.errors.password)}
-          helperText={
-            formik.touched.password ? formik.errors.password : undefined
-          }
-        />
-
-        <Button
-          type="submit"
-          variant="contained"
-          fullWidth
-          onClick={() => formik.handleSubmit}
-          disabled={!formik.isValid || !formik.dirty}
-        >
-          Login
-        </Button>
-      </Stack>
-    </Paper>
+    <div style={{ maxWidth: 400, margin: "0 auto", padding: 20 }}>
+      <TextInputField
+        name="email"
+        label="Email"
+        value={values.email}
+        onChange={handleChange}
+        error={!!errors.email}
+        helperText={errors.email}
+        autoComplete="email"
+      />
+      <TextInputField
+        name="password"
+        label="Password"
+        value={values.password}
+        onChange={handleChange}
+        error={!!errors.password}
+        helperText={errors.password}
+        showTogglePassword
+        type="password"
+        autoComplete="current-password"
+      />
+      <Button
+        variant="contained"
+        fullWidth
+        sx={{ mt: 2 }}
+        onClick={handleSubmit}
+      >
+        Login
+      </Button>
+    </div>
   );
 };
 
