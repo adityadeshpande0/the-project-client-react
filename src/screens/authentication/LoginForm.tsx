@@ -19,7 +19,7 @@ const validationRules = {
   },
 };
 
-const Login: React.FC = () => {
+const LoginForm: React.FC = () => {
   const { values, errors, handleChange, validateForm } =
     useFormValidation<FormFields>(
       {
@@ -99,4 +99,4 @@ const Login: React.FC = () => {
   );
 };
 
-export default Login;
+export default LoginForm;

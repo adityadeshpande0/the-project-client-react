@@ -1,4 +1,4 @@
-import Login from "./screens/authentication/Login";
+import Login from "./screens/authentication/Login/Login";
 
 function App() {
   return (
