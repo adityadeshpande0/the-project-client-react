@@ -29,13 +29,13 @@ export function useFormValidation<T>(
       let error = "";
 
       if (rules.required && !value.trim()) {
-        error = "This field is required.";
+        error = "This field is required";
       } else if (rules.minLength && value.length < rules.minLength) {
         error = `Minimum length is ${rules.minLength}.`;
       } else if (rules.maxLength && value.length > rules.maxLength) {
         error = `Maximum length is ${rules.maxLength}.`;
       } else if (rules.pattern && !rules.pattern.test(value)) {
-        error = "Invalid format.";
+        error = "Invalid format";
       } else if (rules.custom) {
         const customError = rules.custom(value);
         if (customError) error = customError;

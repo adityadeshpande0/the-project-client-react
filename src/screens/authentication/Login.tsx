@@ -1,6 +1,6 @@
 import React from "react";
 import TextInputField from "../../components/text-input-fields/TextInputField";
-import { Button } from "@mui/material";
+import { Button, Checkbox, Link, Typography } from "@mui/material";
 import { useFormValidation } from "../../hooks/useFormValidation";
 
 type FormFields = {
@@ -40,6 +40,12 @@ const Login: React.FC = () => {
 
   return (
     <div style={{ maxWidth: 400, margin: "0 auto", padding: 20 }}>
+      <div>
+        <Typography variant="h4">Sign in</Typography>
+        <Typography variant="body1" color="textSecondary" gutterBottom>
+          Please login to continue to your account.
+        </Typography>
+      </div>
       <TextInputField
         name="email"
         label="Email"
@@ -60,6 +66,12 @@ const Login: React.FC = () => {
         type="password"
         autoComplete="current-password"
       />
+      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+        <Checkbox name="rememberMe" color="primary" sx={{ padding: 0 }} />
+        <Typography variant="body2" color="textSecondary">
+          Keep me logged in
+        </Typography>
+      </div>
       <Button
         variant="contained"
         fullWidth
@@ -68,6 +80,19 @@ const Login: React.FC = () => {
       >
         Login
       </Button>
+      <div>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <hr style={{ flex: 1 }} />
+          <Typography variant="body2" color="textSecondary">
+            OR
+          </Typography>
+          <hr style={{ flex: 1 }} />
+        </div>
+        <div>Sign in with google</div>
+        <div>
+          <Typography>Need an account ? <Link>Create one</Link></Typography>
+        </div>
+      </div>
     </div>
   );
 };
