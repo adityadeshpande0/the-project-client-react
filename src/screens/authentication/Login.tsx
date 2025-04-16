@@ -90,7 +90,9 @@ const Login: React.FC = () => {
         </div>
         <div>Sign in with google</div>
         <div>
-          <Typography>Need an account ? <Link>Create one</Link></Typography>
+          <Typography>
+            Need an account ? <Link>Create one</Link>
+          </Typography>
         </div>
       </div>
     </div>
