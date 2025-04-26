@@ -1,4 +1,5 @@
-import React from "react";
+import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import React, { useState } from "react";
 
 interface QuestionProps {
   question: string;
@@ -6,22 +7,37 @@ interface QuestionProps {
   onSelectOption: (option: string) => void;
 }
 
-const Questions: React.FC<QuestionProps> = ({ question, options, onSelectOption }) => {
+const Questions: React.FC<QuestionProps> = ({
+  question,
+  options,
+  onSelectOption,
+}) => {
+  const [selectedOption, setSelectedOption] = useState<string>("");
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value;
+    setSelectedOption(value);
+    onSelectOption(value);
+  };
+
   return (
     <div className="p-4 rounded-2xl shadow-md bg-white">
       <h2 className="text-xl font-semibold mb-4">{question}</h2>
-      <ul className="space-y-2">
+      <RadioGroup
+        name="question-options"
+        value={selectedOption}
+        onChange={handleChange}
+      >
         {options.map((option, index) => (
-          <li key={index}>
-            <button
-              onClick={() => onSelectOption(option)}
-              className="w-full text-left p-3 bg-gray-100 rounded-lg hover:bg-gray-200"
-            >
-              {option}
-            </button>
-          </li>
+          <FormControlLabel
+            key={index}
+            value={option}
+            control={<Radio />}
+            label={option}
+            className="mb-2"
+          />
         ))}
-      </ul>
+      </RadioGroup>
     </div>
   );
 };
