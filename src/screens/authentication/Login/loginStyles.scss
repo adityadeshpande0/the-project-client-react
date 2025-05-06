@@ -1,0 +1,13 @@
+.login-screen-main-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 96vh;
+  .login-screen-image-container {
+    flex: 2;
+    display: "flex";
+    justify-content: "center";
+    width: "100%";
+    height: "100%";
+  }
+}
