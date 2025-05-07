@@ -53,6 +53,9 @@
     .login-screen-image-container {
       height: 30vh;
     }
+    .login-screen-image {
+      display: none;
+    }
   }
 }
 
@@ -67,8 +70,16 @@
     flex-direction: row;
     align-items: center;
     gap: 8px;
+    margin-bottom: 16px; // Add spacing below the header
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 10;
   }
-
+  .login-form-app-icon {
+    width: 20px;
+    height: 20px;
+  }
   .login-title {
     margin-bottom: 16px;
   }

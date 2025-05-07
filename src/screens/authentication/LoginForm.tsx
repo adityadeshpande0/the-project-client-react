@@ -43,7 +43,7 @@ const LoginForm: React.FC = () => {
   return (
     <div className="login-form-main-container">
       <div className="login-header">
-        <img src={app_icon} alt="application icon" />
+        <img className="login-form-app-icon" src={app_icon} alt="application icon" />
         <Typography>Career Insta</Typography>
       </div>
       <div className="login-title">
