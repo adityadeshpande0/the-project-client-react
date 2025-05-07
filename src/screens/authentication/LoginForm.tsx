@@ -48,7 +48,7 @@ const LoginForm: React.FC = () => {
       </div>
       <div className="login-title">
         <Typography variant="h4">Sign in</Typography>
-        <Typography variant="body1" color="textSecondary" gutterBottom>
+        <Typography className="login-form-secondary-text" variant="body1" color="textSecondary" gutterBottom>
           Please login to continue to your account.
         </Typography>
       </div>

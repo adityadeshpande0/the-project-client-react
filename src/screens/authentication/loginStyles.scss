@@ -25,10 +25,10 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: 0.625rem;
   }
 
-  @media (max-width: 1024px) {
+  @media (max-width: 64rem) {
     flex-direction: column;
     height: auto;
 
@@ -43,16 +43,17 @@
     }
   }
 
-  @media (max-width: 768px) {
+  @media (max-width: 48rem) {
     .login-screen-image-container {
       height: 40vh;
     }
   }
 
-  @media (max-width: 480px) {
+  @media (max-width: 30rem) {
     .login-screen-image-container {
       height: 30vh;
     }
+
     .login-screen-image {
       display: none;
     }
@@ -60,59 +61,68 @@
 }
 
 .login-form-main-container {
-  max-width: 400px;
-  margin: "0 auto";
-  padding-left: 20px;
-  padding-right: 20px;
+  max-width: 25rem;
+  margin: 0 auto;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 
   .login-header {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 16px; // Add spacing below the header
+    gap: 0.5rem;
+    margin-bottom: 1rem;
     position: sticky;
     top: 0;
     background-color: #fff;
     z-index: 10;
   }
+
   .login-form-app-icon {
-    width: 20px;
-    height: 20px;
+    width: 1.25rem;
+    height: 1.25rem;
   }
+
   .login-title {
-    margin-bottom: 16px;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+  }
+  .login-form-secondary-text {
+    margin-top: 0.5rem;
   }
 
   .login-remember-me {
     display: flex;
+    margin-top: 0.625rem;
+    margin-bottom: 0.625rem;
     align-items: center;
-    gap: 8px;
+    gap: 0.5rem;
   }
 
   .login-button {
-    margin-top: 16px;
+    margin-top: 1rem;
   }
 
   .login-footer {
-    margin-top: 16px;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
   }
 
   .login-divider {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 0.5rem;
   }
 
   .divider-line {
     flex: 1;
     border: none;
-    border-top: 1px solid #ccc;
+    border-top: 0.0625rem solid #ccc;
   }
 
   .login-google {
     text-align: center;
-    margin: 16px 0;
+    margin: 1rem 0;
   }
 
   .login-create-account {
