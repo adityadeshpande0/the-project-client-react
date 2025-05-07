@@ -1,9 +1,10 @@
 import React from "react";
 import TextInputField from "../../components/text-input-fields/TextInputField";
-import { Button, Checkbox, Link, Typography } from "@mui/material";
+import { Button, Checkbox, Typography } from "@mui/material";
 import { useFormValidation } from "../../hooks/useFormValidation";
 import app_icon from "..//..//assets/app_icon.svg";
 import "./loginStyles.scss";
+import { Link } from "react-router-dom";
 
 type FormFields = {
   email: string;
@@ -97,10 +98,10 @@ const LoginForm: React.FC = () => {
           </Typography>
           <hr className="divider-line" />
         </div>
-        <div className="login-google">Sign in with google</div>
+        {/* <div className="login-google">Sign in with google</div> */}
         <div className="login-create-account">
           <Typography>
-            Need an account? <Link>Create one</Link>
+            Need an account? <Link to='/register'>Create one</Link>
           </Typography>
         </div>
       </div>
