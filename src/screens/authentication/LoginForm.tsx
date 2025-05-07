@@ -2,6 +2,7 @@ import React from "react";
 import TextInputField from "../../components/text-input-fields/TextInputField";
 import { Button, Checkbox, Link, Typography } from "@mui/material";
 import { useFormValidation } from "../../hooks/useFormValidation";
+import app_icon from "..//..//assets/app_icon.svg";
 
 type FormFields = {
   email: string;
@@ -39,7 +40,18 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div style={{ maxWidth: 400, margin: "0 auto", padding: 20 }}>
+    <div
+      style={{
+        maxWidth: 400,
+        margin: "0 auto",
+        paddingLeft: 20,
+        paddingRight: 20,
+      }}
+    >
+      <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 8 }}>
+        <img src={app_icon} alt="application icon" />
+        <Typography>Career Insta</Typography>
+      </div>
       <div>
         <Typography variant="h4">Sign in</Typography>
         <Typography variant="body1" color="textSecondary" gutterBottom>
@@ -49,6 +61,7 @@ const LoginForm: React.FC = () => {
       <TextInputField
         name="email"
         label="Email"
+        size="small"
         value={values.email}
         onChange={handleChange}
         error={!!errors.email}
@@ -58,6 +71,7 @@ const LoginForm: React.FC = () => {
       <TextInputField
         name="password"
         label="Password"
+        size="small"
         value={values.password}
         onChange={handleChange}
         error={!!errors.password}
@@ -74,6 +88,7 @@ const LoginForm: React.FC = () => {
       </div>
       <Button
         variant="contained"
+        size="small"
         fullWidth
         sx={{ mt: 2 }}
         onClick={handleSubmit}
