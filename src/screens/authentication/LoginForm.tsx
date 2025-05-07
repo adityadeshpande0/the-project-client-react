@@ -3,6 +3,7 @@ import TextInputField from "../../components/text-input-fields/TextInputField";
 import { Button, Checkbox, Link, Typography } from "@mui/material";
 import { useFormValidation } from "../../hooks/useFormValidation";
 import app_icon from "..//..//assets/app_icon.svg";
+import "./loginStyles.scss";
 
 type FormFields = {
   email: string;
@@ -40,19 +41,12 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <div
-      style={{
-        maxWidth: 400,
-        margin: "0 auto",
-        paddingLeft: 20,
-        paddingRight: 20,
-      }}
-    >
-      <div style={{ display: "flex", flexDirection: "row", alignItems: "center", gap: 8 }}>
+    <div className="login-form-main-container">
+      <div className="login-header">
         <img src={app_icon} alt="application icon" />
         <Typography>Career Insta</Typography>
       </div>
-      <div>
+      <div className="login-title">
         <Typography variant="h4">Sign in</Typography>
         <Typography variant="body1" color="textSecondary" gutterBottom>
           Please login to continue to your account.
@@ -80,7 +74,7 @@ const LoginForm: React.FC = () => {
         type="password"
         autoComplete="current-password"
       />
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+      <div className="login-remember-me">
         <Checkbox name="rememberMe" color="primary" sx={{ padding: 0 }} />
         <Typography variant="body2" color="textSecondary">
           Keep me logged in
@@ -90,23 +84,23 @@ const LoginForm: React.FC = () => {
         variant="contained"
         size="small"
         fullWidth
-        sx={{ mt: 2 }}
+        className="login-button"
         onClick={handleSubmit}
       >
         Login
       </Button>
-      <div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <hr style={{ flex: 1 }} />
+      <div className="login-footer">
+        <div className="login-divider">
+          <hr className="divider-line" />
           <Typography variant="body2" color="textSecondary">
             OR
           </Typography>
-          <hr style={{ flex: 1 }} />
+          <hr className="divider-line" />
         </div>
-        <div>Sign in with google</div>
-        <div>
+        <div className="login-google">Sign in with google</div>
+        <div className="login-create-account">
           <Typography>
-            Need an account ? <Link>Create one</Link>
+            Need an account? <Link>Create one</Link>
           </Typography>
         </div>
       </div>
