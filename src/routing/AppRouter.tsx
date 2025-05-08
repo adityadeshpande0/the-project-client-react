@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Login from "../screens/authentication/Login/Login";
 import QuestionsScreen from "../screens/questions/QuestionsScreen";
-import Register from "../screens/authentication/Register";
+import Register from "../screens/authentication/register/Register";
 
 const AppRouter: React.FC = () => {
   return (
