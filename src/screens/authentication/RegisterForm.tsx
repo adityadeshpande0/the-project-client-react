@@ -2,6 +2,7 @@ import { Button, Typography } from "@mui/material";
 import React from "react";
 import { useFormValidation } from "../../hooks/useFormValidation";
 import TextInputField from "../../components/text-input-fields/TextInputField";
+import { Link } from "react-router-dom";
 type FormFields = {
   fullName: string;
   userName: string;
@@ -60,14 +61,14 @@ const RegisterForm: React.FC = () => {
   };
   return (
     <div className="register-form-main-container">
-      <div>
+      <div className="register-form-header-container">
         <Typography variant="h4" gutterBottom>
           Sign Up
         </Typography>
         <Typography variant="body1" gutterBottom>
           Sign up to build your career with us.
         </Typography>
-        <div>
+        <div className="register-form-inputs-container">
           <TextInputField
             name="fullName"
             label="Full Name"
@@ -96,6 +97,15 @@ const RegisterForm: React.FC = () => {
             onChange={handleChange}
             error={!!errors.email}
             helperText={errors.email}
+            endAdornment={
+              <Button
+                style={{ border: "none", textTransform: "capitalize" }}
+                variant="outlined"
+                size="small"
+              >
+                Get OTP
+              </Button>
+            }
             autoComplete="email"
           />
           <TextInputField
@@ -104,11 +114,6 @@ const RegisterForm: React.FC = () => {
             size="small"
             value={values.oneTimePassword}
             onChange={handleChange}
-            endAdornment={
-              <Button variant="outlined" size="small">
-                Verify
-              </Button>
-            }
             error={!!errors.oneTimePassword}
             helperText={errors.oneTimePassword}
             autoComplete="oneTimePassword"
@@ -136,7 +141,7 @@ const RegisterForm: React.FC = () => {
             autoComplete="confirmPassword"
           />
         </div>
-        <div>
+        <div className="register-form-button-container">
           <Button
             variant="contained"
             size="small"
@@ -146,6 +151,9 @@ const RegisterForm: React.FC = () => {
           >
             Sign Up
           </Button>
+          <Typography variant="body2" gutterBottom>
+            Already have an account? <Link to="/login">Sign In</Link>
+          </Typography>
         </div>
       </div>
     </div>

@@ -1,3 +1,51 @@
-.register-form-main-container{
-    
+.register-screen-main-container {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: center;
+    min-height: 100vh;
+    gap: 2rem;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      padding: 1rem;
+      align-items: center;
+    }
+}
+
+.register-screen-form-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%; // Set the form to take 60% of the page width
+    max-width: 60%; // Ensure it doesn't exceed 60% of the width
+}
+
+.register-screen-image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; // inherit height from parent (register-screen-main-container)
+
+    @media (max-width: 768px) {
+      height: auto;
+      width: 100%;
+      margin-top: 1rem;
+    }
+}
+
+.register-screen-image {
+    height: 100%;
+    width: auto;
+    max-height: 100vh;
+    object-fit: cover;
+    border-radius: 8px;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
 }
