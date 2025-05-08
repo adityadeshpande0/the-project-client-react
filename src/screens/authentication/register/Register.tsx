@@ -1,9 +1,10 @@
 import React from "react";
+import RegisterForm from "../RegisterForm";
 
 const Register: React.FC = () => {
   return (
     <div className="">
-      <h1>Register Screen</h1>
+      <RegisterForm />
     </div>
   );
 };
