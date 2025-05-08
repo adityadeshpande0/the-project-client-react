@@ -22,6 +22,7 @@ const validationRules = {
   userName: {
     required: true,
     minLength: 3,
+    maxLength: 20,
   },
   oneTimePassword: {
     required: true,
@@ -103,6 +104,11 @@ const RegisterForm: React.FC = () => {
             size="small"
             value={values.oneTimePassword}
             onChange={handleChange}
+            endAdornment={
+              <Button variant="outlined" size="small">
+                Verify
+              </Button>
+            }
             error={!!errors.oneTimePassword}
             helperText={errors.oneTimePassword}
             autoComplete="oneTimePassword"
@@ -114,6 +120,8 @@ const RegisterForm: React.FC = () => {
             value={values.password}
             onChange={handleChange}
             error={!!errors.password}
+            type="password"
+            showTogglePassword
             helperText={errors.password}
             autoComplete="password"
           />
@@ -121,10 +129,10 @@ const RegisterForm: React.FC = () => {
             name="confirmPassword"
             label="Confirm Password"
             size="small"
-            value={values.password}
+            value={values.confirmPassword}
             onChange={handleChange}
-            error={!!errors.password}
-            helperText={errors.password}
+            error={!!errors.confirmPassword}
+            helperText={errors.confirmPassword}
             autoComplete="confirmPassword"
           />
         </div>
