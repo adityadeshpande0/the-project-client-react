@@ -104,7 +104,7 @@
   }
 
   .login-footer {
-    margin-top: 1.5rem;
+    // margin-top: 1.5rem;
     margin-bottom: 1.5rem;
   }
 
@@ -126,7 +126,10 @@
   }
 
   .login-create-account {
-    text-align: center;
-    margin-top: 1rem;
+    text-align: left;
+    margin-top: 0.5rem;
+  }
+  .login-form-link{
+    text-decoration: none;
   }
 }

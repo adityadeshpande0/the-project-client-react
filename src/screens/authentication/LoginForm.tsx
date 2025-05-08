@@ -91,17 +91,17 @@ const LoginForm: React.FC = () => {
         Login
       </Button>
       <div className="login-footer">
-        <div className="login-divider">
+        {/* <div className="login-divider">
           <hr className="divider-line" />
           <Typography variant="body2" color="textSecondary">
             OR
           </Typography>
           <hr className="divider-line" />
-        </div>
+        </div> */}
         {/* <div className="login-google">Sign in with google</div> */}
         <div className="login-create-account">
-          <Typography>
-            Need an account? <Link to='/register'>Create one</Link>
+          <Typography variant="body2" color="textSecondary">
+            Need an account? <Link className="login-form-link" to='/register'>Create one</Link>
           </Typography>
         </div>
       </div>
