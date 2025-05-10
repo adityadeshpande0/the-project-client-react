@@ -3,7 +3,7 @@ import TextInputField from "../../components/text-input-fields/TextInputField";
 import { Button, Typography } from "@mui/material";
 import { useFormValidation } from "../../hooks/useFormValidation";
 import app_icon from "..//..//assets/app_icon.svg";
-import "./loginStyles.scss";
+import "./registerStyles.scss";
 import { Link } from "react-router-dom";
 
 type FormFields = {
