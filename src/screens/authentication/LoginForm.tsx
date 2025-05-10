@@ -88,7 +88,7 @@ const LoginForm: React.FC = () => {
         className="login-button"
         onClick={handleSubmit}
       >
-        Login
+        Sign in
       </Button>
       <div className="login-footer">
         {/* <div className="login-divider">
