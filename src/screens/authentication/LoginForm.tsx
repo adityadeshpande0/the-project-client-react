@@ -101,7 +101,7 @@ const LoginForm: React.FC = () => {
         {/* <div className="login-google">Sign in with google</div> */}
         <div className="login-create-account">
           <Typography variant="body2" color="textSecondary">
-            Need an account? <Link className="login-form-link" to='/register'>Create one</Link>
+            Need an account? <Link className="login-form-link" to='/signup'>Create one</Link>
           </Typography>
         </div>
       </div>
