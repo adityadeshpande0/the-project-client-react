@@ -1,10 +1,11 @@
 import React from "react";
 import TextInputField from "../../components/text-input-fields/TextInputField";
-import { Button, Typography } from "@mui/material";
+import { Button, CircularProgress, Typography } from "@mui/material";
 import { useFormValidation } from "../../hooks/useFormValidation";
 import app_icon from "..//..//assets/app_icon.svg";
 import "./registerStyles.scss";
 import { Link } from "react-router-dom";
+import { useSendotpServiceMutation } from "./data-call/authApiCall";
 
 type FormFields = {
   fullName: string;
@@ -47,6 +48,8 @@ const validationRules = {
 };
 
 const RegisterForm: React.FC = () => {
+  const [sendotp, { isLoading, isError }] = useSendotpServiceMutation();
+  console.log(isLoading)
   const { values, errors, handleChange, validateForm } =
     useFormValidation<FormFields>(
       {
@@ -66,6 +69,15 @@ const RegisterForm: React.FC = () => {
       // Call your login API here
     } else {
       console.log("Validation errors:", errors);
+    }
+  };
+
+  const handleSendOtp = async () => {
+    try {
+      const response = await sendotp({ email: values.email }).unwrap();
+      console.log("Send OTP to:", values.email, response);
+    } catch (error) {
+      console.error("Error sending OTP:", error);
     }
   };
 
@@ -115,8 +127,18 @@ const RegisterForm: React.FC = () => {
         label="Email"
         size="small"
         endAdornment={
-          <Button style={{ textTransform: "capitalize" }} size="small">
-            Send OTP
+          <Button
+            onClick={handleSendOtp}
+            style={{ textTransform: "capitalize" }}
+            size="small"
+            disabled={isLoading}
+            aria-label="Send OTP"
+          >
+            {isLoading ? (
+              "loading..."
+            ) : (
+              "Send OTP"
+            )}
           </Button>
         }
         value={values.email}
