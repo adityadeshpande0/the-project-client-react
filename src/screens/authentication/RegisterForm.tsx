@@ -49,7 +49,7 @@ const validationRules = {
 
 const RegisterForm: React.FC = () => {
   const [sendotp, { isLoading, isError }] = useSendotpServiceMutation();
-  console.log(isLoading)
+  console.log(isLoading);
   const { values, errors, handleChange, validateForm } =
     useFormValidation<FormFields>(
       {
@@ -66,7 +66,6 @@ const RegisterForm: React.FC = () => {
   const handleSubmit = () => {
     if (validateForm()) {
       console.log("Register successful:", values);
-      // Call your login API here
     } else {
       console.log("Validation errors:", errors);
     }
@@ -126,16 +125,19 @@ const RegisterForm: React.FC = () => {
         name="email"
         label="Email"
         size="small"
+        disabled={isLoading}
         endAdornment={
           <Button
             onClick={handleSendOtp}
             style={{ textTransform: "capitalize" }}
             size="small"
-            disabled={isLoading}
+            disabled={isLoading || !!errors.email}
             aria-label="Send OTP"
           >
             {isLoading ? (
-              "loading..."
+              <CircularProgress size={20} />
+            ) : isError ? (
+              "Resend OTP"
             ) : (
               "Send OTP"
             )}
