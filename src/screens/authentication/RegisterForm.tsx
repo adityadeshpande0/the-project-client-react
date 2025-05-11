@@ -48,7 +48,8 @@ const validationRules = {
 };
 
 const RegisterForm: React.FC = () => {
-  const [sendotp, { isLoading, isError }] = useSendotpServiceMutation();
+  const [sendotp, { isLoading, isError, isSuccess }] =
+    useSendotpServiceMutation();
   console.log(isLoading);
   const { values, errors, handleChange, validateForm } =
     useFormValidation<FormFields>(
@@ -131,7 +132,7 @@ const RegisterForm: React.FC = () => {
             onClick={handleSendOtp}
             style={{ textTransform: "capitalize" }}
             size="small"
-            disabled={isLoading || !!errors.email}
+            disabled={isLoading || !!errors.email || !values.email}
             aria-label="Send OTP"
           >
             {isLoading ? (
@@ -149,16 +150,18 @@ const RegisterForm: React.FC = () => {
         helperText={errors.email}
         autoComplete="email"
       />
-      <TextInputField
-        name="oneTimePassword"
-        label="OTP"
-        size="small"
-        value={values.oneTimePassword}
-        onChange={handleChange}
-        error={!!errors.oneTimePassword}
-        helperText={errors.oneTimePassword}
-        autoComplete="oneTimePassword"
-      />
+      {isSuccess && (
+        <TextInputField
+          name="oneTimePassword"
+          label="OTP"
+          size="small"
+          value={values.oneTimePassword}
+          onChange={handleChange}
+          error={!!errors.oneTimePassword}
+          helperText={errors.oneTimePassword}
+          autoComplete="oneTimePassword"
+        />
+      )}
       <TextInputField
         name="password"
         label="Password"
