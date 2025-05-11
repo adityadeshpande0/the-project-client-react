@@ -114,6 +114,11 @@ const RegisterForm: React.FC = () => {
         name="email"
         label="Email"
         size="small"
+        endAdornment={
+          <Button style={{ textTransform: "capitalize" }} size="small">
+            Send OTP
+          </Button>
+        }
         value={values.email}
         onChange={handleChange}
         error={!!errors.email}
@@ -142,7 +147,7 @@ const RegisterForm: React.FC = () => {
         type="password"
         autoComplete="current-password"
       />
-       <TextInputField
+      <TextInputField
         name="confirmPassword"
         label="Confirm Password"
         size="small"
@@ -150,7 +155,7 @@ const RegisterForm: React.FC = () => {
         onChange={handleChange}
         error={!!errors.confirmPassword}
         helperText={errors.confirmPassword}
-        showTogglePassword = {false}
+        showTogglePassword={false}
         type="password"
         autoComplete="current-password"
       />
