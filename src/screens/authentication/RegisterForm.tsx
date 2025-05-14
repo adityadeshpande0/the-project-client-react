@@ -7,6 +7,7 @@ import "./registerStyles.scss";
 import { Link } from "react-router-dom";
 import {
   useSendotpServiceMutation,
+  useSignupUserMutation,
   useVerifyotpServiceMutation,
 } from "./data-call/authApiCall";
 
@@ -54,6 +55,7 @@ const RegisterForm: React.FC = () => {
   const [sendotp, { isLoading, isError, isSuccess }] =
     useSendotpServiceMutation();
   const [verifyOtp] = useVerifyotpServiceMutation();
+  const [signup] = useSignupUserMutation();
   const { values, errors, handleChange, validateForm } =
     useFormValidation<FormFields>(
       {
@@ -69,6 +71,19 @@ const RegisterForm: React.FC = () => {
 
   const handleSubmit = () => {
     if (validateForm()) {
+      signup({
+        fullName: values.fullName,
+        userName: values.userName,
+        email: values.email,
+        password: values.password,
+      })
+        .unwrap()
+        .then((response) => {
+          console.log("Registration successful:", response);
+        })
+        .catch((error) => {
+          console.error("Registration error:", error);
+        });
       console.log("Register successful:", values);
     } else {
       console.log("Validation errors:", errors);

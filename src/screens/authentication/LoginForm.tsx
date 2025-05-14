@@ -5,6 +5,7 @@ import { useFormValidation } from "../../hooks/useFormValidation";
 import app_icon from "..//..//assets/app_icon.svg";
 import "./loginStyles.scss";
 import { Link } from "react-router-dom";
+import { useSigninUserMutation } from "./data-call/authApiCall";
 
 type FormFields = {
   email: string;
@@ -23,6 +24,7 @@ const validationRules = {
 };
 
 const LoginForm: React.FC = () => {
+  const [signin] = useSigninUserMutation();
   const { values, errors, handleChange, validateForm } =
     useFormValidation<FormFields>(
       {
@@ -36,6 +38,7 @@ const LoginForm: React.FC = () => {
     if (validateForm()) {
       console.log("Login successful:", values);
       // Call your login API here
+      signin({ values }).unwrap();
     } else {
       console.log("Validation errors:", errors);
     }
@@ -44,12 +47,21 @@ const LoginForm: React.FC = () => {
   return (
     <div className="login-form-main-container">
       <div className="login-header">
-        <img className="login-form-app-icon" src={app_icon} alt="application icon" />
+        <img
+          className="login-form-app-icon"
+          src={app_icon}
+          alt="application icon"
+        />
         <Typography>Career Insta</Typography>
       </div>
       <div className="login-title">
         <Typography variant="h4">Sign in</Typography>
-        <Typography className="login-form-secondary-text" variant="body1" color="textSecondary" gutterBottom>
+        <Typography
+          className="login-form-secondary-text"
+          variant="body1"
+          color="textSecondary"
+          gutterBottom
+        >
           Please login to continue to your account.
         </Typography>
       </div>
@@ -101,7 +113,10 @@ const LoginForm: React.FC = () => {
         {/* <div className="login-google">Sign in with google</div> */}
         <div className="login-create-account">
           <Typography variant="body2" color="textSecondary">
-            Need an account? <Link className="login-form-link" to='/signup'>Create one</Link>
+            Need an account?{" "}
+            <Link className="login-form-link" to="/signup">
+              Create one
+            </Link>
           </Typography>
         </div>
       </div>
