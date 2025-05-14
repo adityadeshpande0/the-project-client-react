@@ -64,15 +64,15 @@ const RegisterForm: React.FC = () => {
   const [
     verifyOtp,
     {
-      isError: verifyotpError,
+      // isError: verifyotpError,
       isSuccess: verifyotpSuccess,
-      isLoading: verifyotpLoading,
+      // isLoading: verifyotpLoading,
     },
   ] = useVerifyotpServiceMutation();
   const [
     signup,
     {
-      isError: signupError,
+      // isError: signupError,
       isSuccess: signupSuccess,
       isLoading: signupLoading,
     },
