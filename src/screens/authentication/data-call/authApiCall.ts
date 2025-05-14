@@ -17,8 +17,18 @@ export const authApiCall = createApi({
         },
       }),
     }),
+    verifyotpService:builder.mutation({
+      query:(body)=>({
+        url:'/verifyOTP',
+         method: "POST",
+        body,
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+    })
   }),
 });
 
 // Export hooks
-export const { useSendotpServiceMutation } = authApiCall;
+export const { useSendotpServiceMutation, useVerifyotpServiceMutation } = authApiCall;

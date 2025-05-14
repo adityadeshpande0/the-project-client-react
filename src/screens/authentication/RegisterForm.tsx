@@ -2,10 +2,13 @@ import React from "react";
 import TextInputField from "../../components/text-input-fields/TextInputField";
 import { Button, CircularProgress, Typography } from "@mui/material";
 import { useFormValidation } from "../../hooks/useFormValidation";
-import app_icon from "..//..//assets/app_icon.svg";
+import app_icon from "../../assets/app_icon.svg";
 import "./registerStyles.scss";
 import { Link } from "react-router-dom";
-import { useSendotpServiceMutation } from "./data-call/authApiCall";
+import {
+  useSendotpServiceMutation,
+  useVerifyotpServiceMutation,
+} from "./data-call/authApiCall";
 
 type FormFields = {
   fullName: string;
@@ -50,7 +53,7 @@ const validationRules = {
 const RegisterForm: React.FC = () => {
   const [sendotp, { isLoading, isError, isSuccess }] =
     useSendotpServiceMutation();
-  console.log(isLoading);
+  const [verifyOtp] = useVerifyotpServiceMutation();
   const { values, errors, handleChange, validateForm } =
     useFormValidation<FormFields>(
       {
@@ -78,6 +81,18 @@ const RegisterForm: React.FC = () => {
       console.log("Send OTP to:", values.email, response);
     } catch (error) {
       console.error("Error sending OTP:", error);
+    }
+  };
+
+  const handleVerifyOtp = async (otpValue: string) => {
+    try {
+      await verifyOtp({
+        email: values.email,
+        otp: otpValue,
+      }).unwrap();
+      console.log("OTP verified successfully");
+    } catch (error) {
+      console.error("Error verifying OTP:", error);
     }
   };
 
@@ -150,18 +165,22 @@ const RegisterForm: React.FC = () => {
         helperText={errors.email}
         autoComplete="email"
       />
-      {isSuccess && (
-        <TextInputField
-          name="oneTimePassword"
-          label="OTP"
-          size="small"
-          value={values.oneTimePassword}
-          onChange={handleChange}
-          error={!!errors.oneTimePassword}
-          helperText={errors.oneTimePassword}
-          autoComplete="oneTimePassword"
-        />
-      )}
+      <TextInputField
+        name="oneTimePassword"
+        label="OTP"
+        size="small"
+        value={values.oneTimePassword}
+        onChange={(e) => {
+          const otpValue = e.target.value;
+          handleChange(e);
+          if (otpValue.length === 6) {
+            handleVerifyOtp(otpValue);
+          }
+        }}
+        error={!!errors.oneTimePassword}
+        helperText={errors.oneTimePassword}
+        autoComplete="oneTimePassword"
+      />
       <TextInputField
         name="password"
         label="Password"
@@ -196,14 +215,6 @@ const RegisterForm: React.FC = () => {
         Sign up
       </Button>
       <div className="register-footer">
-        {/* <div className="login-divider">
-          <hr className="divider-line" />
-          <Typography variant="body2" color="textSecondary">
-            OR
-          </Typography>
-          <hr className="divider-line" />
-        </div> */}
-        {/* <div className="login-google">Sign in with google</div> */}
         <div className="register-create-account">
           <Typography variant="body2" color="textSecondary">
             Already have an account?{" "}
