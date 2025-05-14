@@ -4,6 +4,7 @@ import { Alert, Button, CircularProgress, Typography } from "@mui/material";
 import { useFormValidation } from "../../hooks/useFormValidation";
 import app_icon from "../../assets/app_icon.svg";
 import CheckIcon from "@mui/icons-material/Check";
+import ErrorIcon from "@mui/icons-material/Error";
 import "./registerStyles.scss";
 import { Link } from "react-router-dom";
 import {
@@ -64,15 +65,15 @@ const RegisterForm: React.FC = () => {
   const [
     verifyOtp,
     {
-      // isError: verifyotpError,
+      isError: verifyotpError,
       isSuccess: verifyotpSuccess,
-      // isLoading: verifyotpLoading,
+      isLoading: verifyotpLoading,
     },
   ] = useVerifyotpServiceMutation();
   const [
     signup,
     {
-      // isError: signupError,
+      isError: signupError,
       isSuccess: signupSuccess,
       isLoading: signupLoading,
     },
@@ -137,6 +138,81 @@ const RegisterForm: React.FC = () => {
     Object.values(errors).some(Boolean) ||
     Object.values(values).some((v) => !v) ||
     signupLoading;
+  const alertState: {
+    severity: "success" | "info" | "warning" | "error";
+    icon?: React.ReactNode;
+    message: string;
+  } | null = (() => {
+    if (signupLoading)
+      return {
+        severity: "info",
+        icon: undefined,
+        message: "Registering, please wait...",
+      };
+    if (signupSuccess)
+      return {
+        severity: "success",
+        icon: <CheckIcon fontSize="inherit" />,
+        message: "You are successfully registered!",
+      };
+    if (signupError)
+      return {
+        severity: "error",
+        icon: <ErrorIcon fontSize="inherit" />,
+        message:
+          typeof signupError === "string"
+            ? signupError
+            : typeof signupError === "object" &&
+              signupError !== null &&
+              "data" in signupError
+            ? (signupError as any).data?.message || "Registration failed!"
+            : "Registration failed!",
+      };
+    if (sendotpLoading)
+      return { severity: "info", icon: undefined, message: "Sending OTP..." };
+    if (sendotpSuccess)
+      return {
+        severity: "success",
+        icon: <CheckIcon fontSize="inherit" />,
+        message: "OTP sent to your email!",
+      };
+    if (sendotpError)
+      return {
+        severity: "error",
+        icon: <ErrorIcon fontSize="inherit" />,
+        message:
+          typeof sendotpError === "string"
+            ? sendotpError
+            : typeof sendotpError === "object" &&
+              sendotpError !== null &&
+              "data" in sendotpError
+            ? (sendotpError as any).data?.message || "Failed to send OTP!"
+            : "Failed to send OTP!",
+      };
+    if (verifyotpLoading)
+      return { severity: "info", icon: undefined, message: "Verifying OTP..." };
+    if (verifyotpSuccess)
+      return {
+        severity: "success",
+        icon: <CheckIcon fontSize="inherit" />,
+        message: "OTP verified successfully!",
+      };
+    if (verifyotpError)
+      return {
+        severity: "error",
+        icon: <ErrorIcon fontSize="inherit" />,
+        message:
+          typeof verifyotpError === "string"
+            ? verifyotpError
+            : typeof verifyotpError === "object" &&
+              verifyotpError !== null &&
+              "data" in verifyotpError
+            ? (verifyotpError as any).data?.message ||
+              "OTP verification failed!"
+            : "OTP verification failed!",
+      };
+    return null;
+  })();
   return (
     <div className="register-form-main-container">
       <div className="register-header">
@@ -157,9 +233,9 @@ const RegisterForm: React.FC = () => {
         >
           Sign up to build your career with us
         </Typography>
-        {signupSuccess && (
-          <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
-            You are successfully registered !
+        {alertState && (
+          <Alert severity={alertState.severity} icon={alertState.icon}>
+            {alertState.message}
           </Alert>
         )}
       </div>

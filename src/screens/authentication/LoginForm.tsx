@@ -25,7 +25,8 @@ const validationRules = {
 };
 
 const LoginForm: React.FC = () => {
-  const [signin, { isSuccess, data }] = useSigninUserMutation();
+  const [signin, { isSuccess, data, isLoading, isError }] =
+    useSigninUserMutation();
   const { values, errors, handleChange, validateForm } =
     useFormValidation<FormFields>(
       {
@@ -37,14 +38,11 @@ const LoginForm: React.FC = () => {
 
   const handleSubmit = () => {
     if (validateForm()) {
-      console.log("Login successful:", values);
       // Call your login API here
       signin({
         emailOrUsername: values.email,
         password: values.password,
       }).unwrap();
-    } else {
-      console.log("Validation errors:", errors);
     }
   };
 
@@ -69,9 +67,22 @@ const LoginForm: React.FC = () => {
           Please login to continue to your account.
         </Typography>
       </div>
-      {isSuccess && (
-        <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
-          {data?.message}
+      {(isLoading || isSuccess || isError) && (
+        <Alert
+          severity={
+            isLoading
+              ? "info"
+              : isSuccess
+              ? "success"
+              : isError
+              ? "error"
+              : "info"
+          }
+          icon={isSuccess ? <CheckIcon fontSize="inherit" /> : undefined}
+        >
+          {isLoading && "Signing in, please wait..."}
+          {isSuccess && (data?.message || "Login successful!")}
+          {isError && (data?.error.message || "Login failed!")}
         </Alert>
       )}
       <TextInputField
