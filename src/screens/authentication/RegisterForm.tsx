@@ -1,8 +1,9 @@
 import React from "react";
 import TextInputField from "../../components/text-input-fields/TextInputField";
-import { Button, CircularProgress, Typography } from "@mui/material";
+import { Alert, Button, CircularProgress, Typography } from "@mui/material";
 import { useFormValidation } from "../../hooks/useFormValidation";
 import app_icon from "../../assets/app_icon.svg";
+import CheckIcon from "@mui/icons-material/Check";
 import "./registerStyles.scss";
 import { Link } from "react-router-dom";
 import {
@@ -52,10 +53,30 @@ const validationRules = {
 };
 
 const RegisterForm: React.FC = () => {
-  const [sendotp, { isLoading, isError, isSuccess }] =
-    useSendotpServiceMutation();
-  const [verifyOtp] = useVerifyotpServiceMutation();
-  const [signup] = useSignupUserMutation();
+  const [
+    sendotp,
+    {
+      isLoading: sendotpLoading,
+      isError: sendotpError,
+      isSuccess: sendotpSuccess,
+    },
+  ] = useSendotpServiceMutation();
+  const [
+    verifyOtp,
+    {
+      isError: verifyotpError,
+      isSuccess: verifyotpSuccess,
+      isLoading: verifyotpLoading,
+    },
+  ] = useVerifyotpServiceMutation();
+  const [
+    signup,
+    {
+      isError: signupError,
+      isSuccess: signupSuccess,
+      isLoading: signupLoading,
+    },
+  ] = useSignupUserMutation();
   const { values, errors, handleChange, validateForm } =
     useFormValidation<FormFields>(
       {
@@ -110,7 +131,12 @@ const RegisterForm: React.FC = () => {
       console.error("Error verifying OTP:", error);
     }
   };
-
+  const isSignupDisabled =
+    !sendotpSuccess ||
+    !verifyotpSuccess ||
+    Object.values(errors).some(Boolean) ||
+    Object.values(values).some((v) => !v) ||
+    signupLoading;
   return (
     <div className="register-form-main-container">
       <div className="register-header">
@@ -131,6 +157,11 @@ const RegisterForm: React.FC = () => {
         >
           Sign up to build your career with us
         </Typography>
+        {signupSuccess && (
+          <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+            You are successfully registered !
+          </Alert>
+        )}
       </div>
       <TextInputField
         name="fullName"
@@ -156,18 +187,18 @@ const RegisterForm: React.FC = () => {
         name="email"
         label="Email"
         size="small"
-        disabled={isLoading}
+        disabled={sendotpLoading}
         endAdornment={
           <Button
             onClick={handleSendOtp}
             style={{ textTransform: "capitalize" }}
             size="small"
-            disabled={isLoading || !!errors.email || !values.email}
+            disabled={sendotpLoading || !!errors.email || !values.email}
             aria-label="Send OTP"
           >
-            {isLoading ? (
+            {sendotpLoading ? (
               <CircularProgress size={20} />
-            ) : isError ? (
+            ) : sendotpError ? (
               "Resend OTP"
             ) : (
               "Send OTP"
@@ -180,7 +211,7 @@ const RegisterForm: React.FC = () => {
         helperText={errors.email}
         autoComplete="email"
       />
-      {isSuccess && (
+      {sendotpSuccess && (
         <TextInputField
           name="oneTimePassword"
           label="OTP"
@@ -228,6 +259,7 @@ const RegisterForm: React.FC = () => {
         fullWidth
         className="register-button"
         onClick={handleSubmit}
+        disabled={isSignupDisabled}
       >
         Sign up
       </Button>

@@ -1,8 +1,9 @@
 import React from "react";
 import TextInputField from "../../components/text-input-fields/TextInputField";
-import { Button, Checkbox, Typography } from "@mui/material";
+import { Alert, Button, Checkbox, Typography } from "@mui/material";
 import { useFormValidation } from "../../hooks/useFormValidation";
 import app_icon from "..//..//assets/app_icon.svg";
+import CheckIcon from "@mui/icons-material/Check";
 import "./loginStyles.scss";
 import { Link } from "react-router-dom";
 import { useSigninUserMutation } from "./data-call/authApiCall";
@@ -24,7 +25,7 @@ const validationRules = {
 };
 
 const LoginForm: React.FC = () => {
-  const [signin] = useSigninUserMutation();
+  const [signin, { isSuccess, isError, isLoading, data }] = useSigninUserMutation();
   const { values, errors, handleChange, validateForm } =
     useFormValidation<FormFields>(
       {
@@ -38,7 +39,10 @@ const LoginForm: React.FC = () => {
     if (validateForm()) {
       console.log("Login successful:", values);
       // Call your login API here
-      signin({ values }).unwrap();
+      signin({
+        emailOrUsername: values.email,
+        password: values.password,
+      }).unwrap();
     } else {
       console.log("Validation errors:", errors);
     }
@@ -65,6 +69,11 @@ const LoginForm: React.FC = () => {
           Please login to continue to your account.
         </Typography>
       </div>
+      {isSuccess && (
+        <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+          {data?.message}
+        </Alert>
+      )}
       <TextInputField
         name="email"
         label="Email"
