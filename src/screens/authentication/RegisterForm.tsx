@@ -165,22 +165,24 @@ const RegisterForm: React.FC = () => {
         helperText={errors.email}
         autoComplete="email"
       />
-      <TextInputField
-        name="oneTimePassword"
-        label="OTP"
-        size="small"
-        value={values.oneTimePassword}
-        onChange={(e) => {
-          const otpValue = e.target.value;
-          handleChange(e);
-          if (otpValue.length === 6) {
-            handleVerifyOtp(otpValue);
-          }
-        }}
-        error={!!errors.oneTimePassword}
-        helperText={errors.oneTimePassword}
-        autoComplete="oneTimePassword"
-      />
+      {isSuccess && (
+        <TextInputField
+          name="oneTimePassword"
+          label="OTP"
+          size="small"
+          value={values.oneTimePassword}
+          onChange={(e) => {
+            const otpValue = e.target.value;
+            handleChange(e);
+            if (otpValue.length === 6) {
+              handleVerifyOtp(otpValue);
+            }
+          }}
+          error={!!errors.oneTimePassword}
+          helperText={errors.oneTimePassword}
+          autoComplete="oneTimePassword"
+        />
+      )}
       <TextInputField
         name="password"
         label="Password"
