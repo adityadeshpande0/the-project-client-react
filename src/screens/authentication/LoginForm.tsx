@@ -119,6 +119,13 @@ const LoginForm: React.FC = () => {
         fullWidth
         className="login-button"
         onClick={handleSubmit}
+        disabled={
+          isLoading ||
+          !!errors.email ||
+          !!errors.password ||
+          !values.email ||
+          !values.password
+        }
       >
         Sign in
       </Button>

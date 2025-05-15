@@ -27,6 +27,7 @@
     height: 100%;
     object-fit: cover;
     border-radius: 0.625rem;
+    
   }
 
   @media (max-width: 64rem) {
@@ -55,7 +56,7 @@
       height: 30vh;
     }
 
-    .login-screen-image {
+    .register-screen-image {
       display: none;
     }
   }
