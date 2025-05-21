@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import TextInputField from "../../components/text-input-fields/TextInputField";
 import { Alert, Button, Checkbox, Typography } from "@mui/material";
 import { useFormValidation } from "../../hooks/useFormValidation";
@@ -36,6 +36,12 @@ const LoginForm: React.FC = () => {
       validationRules
     );
 
+  useEffect(() => {
+    if (isSuccess && data) {
+      console.log(data);
+    }
+  }, [isSuccess, data]);
+
   const handleSubmit = () => {
     if (validateForm()) {
       // Call your login API here
@@ -45,7 +51,6 @@ const LoginForm: React.FC = () => {
       }).unwrap();
     }
   };
-
   return (
     <div className="login-form-main-container">
       <div className="login-header">

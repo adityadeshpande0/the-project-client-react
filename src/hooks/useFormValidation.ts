@@ -50,7 +50,11 @@ export function useFormValidation<T>(
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { name, value } = e.target;
-      setValues((prev) => ({ ...prev, [name]: value }));
+      setValues((prev) => {
+        if (prev[name as keyof T] === value) return prev;
+        return { ...prev, [name]: value };
+      });
+
       validateField(name as keyof T, value);
     },
     [validateField]

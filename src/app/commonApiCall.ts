@@ -21,4 +21,4 @@ export const commonApiCall = createApi({
 });
 
 // Export hooks
-export const {} = commonApiCall;
+export const { useGetUserProfileQuery } = commonApiCall;
