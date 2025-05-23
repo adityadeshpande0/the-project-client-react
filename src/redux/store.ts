@@ -16,7 +16,7 @@ const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: false,
       immutableCheck: false,
-    }).concat(authApiCall.middleware),
+    }).concat(authApiCall.middleware, commonApiCall.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

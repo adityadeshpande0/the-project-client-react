@@ -7,6 +7,8 @@ import CheckIcon from "@mui/icons-material/Check";
 import "./loginStyles.scss";
 import { Link, useNavigate } from "react-router-dom";
 import { useSigninUserMutation } from "./data-call/authApiCall";
+import { useDispatch } from "react-redux";
+import { setAuthToken } from "./authSlice";
 
 type FormFields = {
   email: string;
@@ -26,6 +28,7 @@ const validationRules = {
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [signin, { isSuccess, data, isLoading, isError }] =
     useSigninUserMutation();
   const { values, errors, handleChange, validateForm } =
@@ -40,7 +43,8 @@ const LoginForm: React.FC = () => {
   useEffect(() => {
     if (isSuccess && data) {
       console.log(data.token);
-      // navigate("/user-profile");
+      dispatch(setAuthToken(data.token));
+      navigate("/user-profile");
     }
   }, [isSuccess, data]);
 
