@@ -5,7 +5,7 @@ import { useFormValidation } from "../../hooks/useFormValidation";
 import app_icon from "..//..//assets/app_icon.svg";
 import CheckIcon from "@mui/icons-material/Check";
 import "./loginStyles.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useSigninUserMutation } from "./data-call/authApiCall";
 
 type FormFields = {
@@ -25,6 +25,7 @@ const validationRules = {
 };
 
 const LoginForm: React.FC = () => {
+  const navigate = useNavigate();
   const [signin, { isSuccess, data, isLoading, isError }] =
     useSigninUserMutation();
   const { values, errors, handleChange, validateForm } =
@@ -38,7 +39,8 @@ const LoginForm: React.FC = () => {
 
   useEffect(() => {
     if (isSuccess && data) {
-      console.log(data);
+      console.log(data.token);
+      // navigate("/user-profile");
     }
   }, [isSuccess, data]);
 

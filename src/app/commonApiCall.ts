@@ -12,9 +12,17 @@ export const commonApiCall = createApi({
         url: "/user-profile",
         method: "GET",
         body,
+        credentials: "include",
         headers: {
           Authorization: `Bearer `,
         },
+      }),
+    }),
+    getRefreshToken: builder.query({
+      query: () => ({
+        url: "/refresh-token",
+        method: "POST",
+        credentials: "include",
       }),
     }),
   }),
