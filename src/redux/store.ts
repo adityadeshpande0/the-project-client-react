@@ -3,15 +3,8 @@ import rootReducer from "./common-reducers/rootReducer";
 import { authApiCall } from "../screens/authentication/data-call/authApiCall";
 import { commonApiCall } from "../app/commonApiCall";
 
-// Combine the authApiCall.reducer with the rootReducer
-const combinedReducer = {
-  ...rootReducer,
-  authApis: authApiCall.reducer,
-  commonApiCall: commonApiCall.reducer,
-};
-
 const store = configureStore({
-  reducer: combinedReducer,
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,

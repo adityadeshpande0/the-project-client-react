@@ -20,7 +20,7 @@ export const commonApiCall = createApi({
   endpoints: (builder) => ({
     getUserProfile: builder.query({
       query: () => ({
-        url: "/user-profile",
+        url: "/get-user-profile",
         method: "GET",
       }),
     }),
